@@ -19,5 +19,15 @@ public class Main {
         StudentDao studentDao=new StudentDao();
         studentDao.save(student);
 
+        // Mövcud tələbəni yeniləmək (adı və soyadı əsasında)
+        Student updatedStudent = new Student();
+        updatedStudent.setAge(21);
+        updatedStudent.setGrade(95);
+
+        String nameToUpdate = "Nihad";
+        String surnameToUpdate = "Aliyev";
+
+        studentDao.update(updatedStudent, nameToUpdate, surnameToUpdate);
+
     }
 }

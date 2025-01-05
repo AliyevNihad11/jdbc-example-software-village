@@ -5,6 +5,7 @@ import org.example.model.Student;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class StudentDao {
     private final String url = "jdbc:postgresql://localhost:5432/postgres";
@@ -37,4 +38,29 @@ public class StudentDao {
             e.printStackTrace();
         }
     }
+
+    // Tələbə məlumatlarını yeniləmək üçün metod (ad və soyada görə)
+    public void update(Student student, String name, String surname) {
+        String sql = "UPDATE students SET age = ?, grade = ? WHERE name = ? AND surname = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, student.getAge());
+            statement.setInt(2, student.getGrade());
+            statement.setString(3, name);
+            statement.setString(4, surname);
+
+            // SQL sorğunu icra edin
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Tələbə uğurla yeniləndi!");
+            } else {
+                System.out.println("Tələbə tapılmadı!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
